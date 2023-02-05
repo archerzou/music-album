@@ -12,11 +12,11 @@ const SongDetails = () => {
   const { activeSong, isPlaying } = useSelector((state) => state.player);
 
   const { data, isFetching: isFetchinRelatedSongs, error } = useGetSongRelatedQuery({ songid });
+  const filterData = data?.filter((music) => music.artists != null);
+
   const { data: songData, isFetching: isFetchingSongDetails } = useGetSongDetailsQuery({ songid });
 
   if (isFetchingSongDetails && isFetchinRelatedSongs) return <Loader title="Searching song details" />;
-
-  console.log(songData);
 
   if (error) return <Error />;
 
@@ -51,7 +51,7 @@ const SongDetails = () => {
       </div>
 
       <RelatedSongs
-        data={data}
+        data={filterData}
         artistId={artistId}
         isPlaying={isPlaying}
         activeSong={activeSong}
