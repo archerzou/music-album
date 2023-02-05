@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
@@ -30,6 +31,7 @@ const SongCard = ({ song, isPlaying, activeSong, data, i }) => {
         </div>
         <img alt="song_img" src={song.images?.coverart} className="w-full h-full rounded-lg" />
       </div>
+
       <div className="mt-4 flex flex-col">
         <p className="font-semibold text-lg text-white truncate">
           <Link to={`/songs/${song?.key}`}>

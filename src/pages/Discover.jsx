@@ -8,11 +8,14 @@ import { useGetTopChartsQuery } from '../redux/services/shazamCore';
 const Discover = () => {
   const dispatch = useDispatch();
   const { genreListId } = useSelector((state) => state.player);
+  const { activeSong, isPlaying } = useSelector((state) => state.player);
   const { data, isFetching, error } = useGetTopChartsQuery();
   const genreTitle = 'Pop';
 
   if (isFetching) return <Loader title="Loading songs..." />;
   if (error) return <Error />;
+
+  const filterData = data.filter((music) => music.artists != null);
 
   return (
     <div className="flex flex-col">
@@ -28,10 +31,13 @@ const Discover = () => {
       </div>
 
       <div className="flex flex-wrap sm:justify-start justify-center gap-8">
-        {data?.map((song, i) => (
+        {filterData?.map((song, i) => (
           <SongCard
             key={song.key}
             song={song}
+            isPlaying={isPlaying}
+            activeSong={activeSong}
+            data={filterData}
             i={i}
           />
         ))}
